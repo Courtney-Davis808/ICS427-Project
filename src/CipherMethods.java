@@ -28,11 +28,12 @@ public class CipherMethods {
 //    connectDatabase();
 //    addMasterUser("mike", "thisisapass");
 //    addMasterUser("jimmy", "thisisalsoapass");
-//    addLogin(1, "reddit", "mikeReddit", stringToKey(readKey("mike")));
-//    addLogin(1, "facebook", "mikeTwitter", stringToKey(readKey("mike")));
-//    addLogin(2, "reddit", "jimmyReddit", stringToKey(readKey("jimmy")));
-//    addLogin(2, "facebook", "jimmyTwitter", stringToKey(readKey("jimmy")));
+//    addLogin(1, "reddit", "mikeReddit", stringToKey(readKey(getUser(1))));
+//    addLogin(1, "facebook", "mikeTwitter", stringToKey(readKey(getUser(1))));
+//    addLogin(2, "reddit", "jimmyReddit", stringToKey(readKey(getUser(2))));
+//    addLogin(2, "facebook", "jimmyTwitter", stringToKey(readKey(getUser(2))));
 //    showLogins(1);
+//    System.out.println(login("jimmy", "thisisalsoapasss"));
     
     
   }
@@ -171,7 +172,7 @@ public class CipherMethods {
           + " VALUES (?, ?);";
       PreparedStatement stmt = conn.prepareStatement(add);
       stmt.setString(1, user);
-      stmt.setString(2, pass);
+      stmt.setString(2, saltHash(pass));
       stmt.executeUpdate();
       generateKey(user);
       stmt.close();
@@ -289,6 +290,47 @@ public class CipherMethods {
       return false;
     }
   }
+    
+  public static int login(String masterUser, String masterPass) {
+    String url = "jdbc:sqlite:CipherGuardian.db";
+    int getID = -1;
+    String getUser = "";
+    String getPass = "";
+    try (Connection conn = DriverManager.getConnection(url)) {
+      String get = "SELECT master_id, master_user, master_pass FROM master_table WHERE master_user = ?";
+      PreparedStatement stmt = conn.prepareStatement(get);
+      stmt.setString(1, masterUser);
+      ResultSet rs = stmt.executeQuery();
+      if(rs.next() == false) {
+        System.out.println("ERROR: ACCOUNT NOT FOUND");
+        return -1;
+      } else {
+        do {
+          getID = rs.getInt("master_id");
+          getUser = rs.getString("master_user");
+          getPass = rs.getString("master_pass");
+        } while (rs.next());
+        rs.close();
+        stmt.close();
+        conn.close();
+        if(getUser.equals(masterUser)) {
+          if(checkPass(masterPass, getPass)) {
+            return getID;
+          } else { 
+            System.out.println("ERROR: INVALID CREDENTIALS");
+            return -1;
+          }
+        } else {
+          System.out.println("ERROR: INVALID CREDENTIALS");
+          return -1;
+        }
+      }
+      
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+      return -11;
+    }
+  }
   
   public static void editLoginName(int id, String masterUser, String masterPass, String name) {
     String url = "jdbc:sqlite:CipherGuardian.db";
@@ -397,7 +439,7 @@ public class CipherMethods {
   }
   
   public static void getLogin(int id, SecretKey key) {
-    //return a specific login's name and password by decrypting the password using the secret key
+    //return a specific login's name and password by decrypting the password using the secret key. Only do so if the master_id of the login_id matches the current user's master_id
   }
   
   public static void showLogins(int id) {
@@ -423,6 +465,32 @@ public class CipherMethods {
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
+    }
+  }
+  
+  public static String getUser(int id) {
+    String url = "jdbc:sqlite:CipherGuardian.db";
+    String getUser = "";
+    try (Connection conn = DriverManager.getConnection(url)) {
+      String get = "SELECT master_user FROM master_table WHERE master_id = ?";
+      PreparedStatement stmt = conn.prepareStatement(get);
+      stmt.setInt(1, id);
+      ResultSet rs = stmt.executeQuery();
+      if(rs.next() == false) {
+        System.out.println("ERROR: ACCOUNT NOT FOUND");
+        return "";
+      } else {
+        do {
+          getUser = rs.getString("master_user");
+        } while (rs.next());
+        rs.close();
+        stmt.close();
+        conn.close();
+        return getUser;
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+      return "";
     }
   }
 }
