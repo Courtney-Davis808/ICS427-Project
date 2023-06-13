@@ -3,20 +3,7 @@ package ics427;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import picocli.CommandLine.Parameters;
-import picocli.CommandLine.HelpCommand;
-
-import java.io.Console;
-import java.io.File;
-import java.io.Console.*;
-import java.io.IOException;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.security.MessageDigest;
-import java.sql.SQLOutput;
 import java.util.Arrays;
-import java.util.concurrent.Callable;
 
 @Command(name = "cg",
         subcommands = { CommandLine.HelpCommand.class },
