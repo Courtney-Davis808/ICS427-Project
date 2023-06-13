@@ -12,8 +12,12 @@
  
 ### Courtney Davis
 * Create Github repo
+* Threat Model
+* Risk Assessment Plan
 * Libraries and tool documentation
 * Research on database options
+* Review Attack Surface 
+* Dynamic Analysis Tools: Junit and Jacoco, review and document
 
 ### Michael Chun
 * Added static code anlysis to project
