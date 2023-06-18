@@ -14,6 +14,7 @@ public class Main {
             @Option(names = {"-u", "--user" }, description = "Username") String username,
             @Option(names = {"-c", "--create" }, description = "Register account") boolean register
     ) {
+        connectDatabase();
         boolean loop = true;
         String choice = "";
         if (username == null) {
@@ -60,6 +61,10 @@ public class Main {
         }
         System.out.flush();
 
+    }
+
+    public int addOne(int x) {
+        return x + 1;
     }
 
     public static void main(String[] args) {
