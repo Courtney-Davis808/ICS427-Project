@@ -356,6 +356,7 @@ public class CipherMethods {
       conn.close();
     } catch (SQLException e) {
       System.out.println(e.getMessage());
+      System.out.println("ERROR");
     }
     System.out.println("Your generated password is: " + pass + "\nDo not show this password to anyone.");
   }
@@ -367,20 +368,22 @@ public class CipherMethods {
     String cipherText = encryptPass("AES/CBC/PKCS5PADDING", pass, key, salt, iv);
     String url = "jdbc:sqlite:CipherGuardian.db";
     try (Connection conn = DriverManager.getConnection(url)) {
-      String add = "INSERT INTO login_table (master_id, login_name, login_user, login_pass, login_salt)\n"
-          + " VALUES (?, ?, ?, ?, ?);";
+      String add = "INSERT INTO login_table (master_id, login_name, login_user, login_pass, login_salt, login_iv)\n"
+          + " VALUES (?, ?, ?, ?, ?, ?);";
       PreparedStatement stmt = conn.prepareStatement(add);
       stmt.setInt(1, id);
       stmt.setString(2, name);
       stmt.setString(3, user);
       stmt.setString(4, cipherText);
       stmt.setString(5, salt);
+      stmt.setBytes(6,  iv);
       stmt.executeUpdate();
       stmt.close();
       conn.close();
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
+    System.out.println("Your generated password is: " + pass + "\nDo not show this password to anyone.");
   }
   
   public static int getMasterID(int id) {

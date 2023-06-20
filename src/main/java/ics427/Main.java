@@ -54,9 +54,8 @@ public class Main {
             String accountUsername = System.console().readLine().trim();
             System.out.println("Please enter your password or leave it blank if you would like to generate a secure password");
             char[] accountPassword = System.console().readPassword();
-            System.out.println(accountPassword.toString());
             if (accountPassword.length > 0) {
-                addLogin(masterId, accountName, accountUsername, accountPassword.toString());
+                addLogin(masterId, accountName, accountUsername, String.valueOf(accountPassword));
             } else {
                 addLogin(masterId, accountName, accountUsername);
             }
@@ -79,7 +78,7 @@ public class Main {
         System.out.println("I am done, so I wipe terminal");
         try {
             if (System.getProperty("os.name").contains("Windows")) {
-//                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
                 Runtime.getRuntime().exec("clear");
             }
@@ -87,7 +86,7 @@ public class Main {
             System.out.println("FJKDLSFJS");
 
         }
-//        System.out.flush();
+        System.out.flush();
 
     }
 
@@ -96,7 +95,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        connectDatabase();
         int exitCode = new CommandLine(new Main()).execute(args);
         System.exit(exitCode);
     }
