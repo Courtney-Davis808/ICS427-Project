@@ -5,6 +5,9 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import java.util.Arrays;
 
+import static ics427.CipherMethods.*;
+
+
 @Command(name = "cg",
         subcommands = { CommandLine.HelpCommand.class },
         description = "Password manager")
@@ -22,36 +25,61 @@ public class Main {
             System.out.println("Username: " + username);
         }
         System.out.print("Enter password: ");
-        char[] password = System.console().readPassword();
+        String password = Arrays.toString(System.console().readPassword());
 
         if (register) {
             System.out.print("Please re enter your password");
-            char[] tmpPassword = System.console().readPassword();
-            if (!Arrays.equals(password, tmpPassword)) {
+            String tmpPassword = Arrays.toString(System.console().readPassword());
+            if (!password.equals(tmpPassword)) {
                 System.out.println("Passwords don't match");
                 return;
             }
-            System.out.println("Register account with database");
-        } else {
-            System.out.println("Login to database");
+            System.out.println("Register account with database...");
+            addMasterUser(username, password);
         }
+        int masterId = login(username, password);
+        if (masterId == -1) return;
+        System.out.println("Logging in...");
         while (loop) {
             System.out.println("Please select a choice");
             System.out.println("1: Add account");
             System.out.println("2: Get credentials from list of accounts");
-            choice = System.console().readLine();
+            choice = System.console().readLine().trim();
             loop = !(choice.equals("1") || choice.equals("2") || choice.equals("3"));
         }
         if (choice.equals("1")) {
-            System.out.println("Another while loop asking to generate password and stuff");
+            System.out.println("Please enter what account the credentials are for");
+            String accountName = System.console().readLine().trim();
+            System.out.println("Please enter your username");
+            String accountUsername = System.console().readLine().trim();
+            System.out.println("Please enter your password or leave it blank if you would like to generate a secure password");
+            char[] accountPassword = System.console().readPassword();
+            System.out.println(accountPassword.toString());
+            if (accountPassword.length > 0) {
+                addLogin(masterId, accountName, accountUsername, accountPassword.toString());
+            } else {
+                addLogin(masterId, accountName, accountUsername);
+            }
+            System.out.println("Account added");
+
         } else if (choice.equals("2")) {
             System.out.println("Another loop displaying the list of all accounts and when they select the account it prints out their credentials");
+            showLogins(masterId);
+            System.out.println("Enter the number to get credentials");
+            int accountIndex = -1;
+            try {
+                accountIndex = Integer.parseInt(System.console().readLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter an integer");
+                return;
+            }
+            getLogin(masterId, accountIndex);
         }
 
         System.out.println("I am done, so I wipe terminal");
         try {
             if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+//                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
                 Runtime.getRuntime().exec("clear");
             }
@@ -59,7 +87,7 @@ public class Main {
             System.out.println("FJKDLSFJS");
 
         }
-        System.out.flush();
+//        System.out.flush();
 
     }
 
@@ -68,6 +96,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        connectDatabase();
         int exitCode = new CommandLine(new Main()).execute(args);
         System.exit(exitCode);
     }
