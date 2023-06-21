@@ -11,6 +11,12 @@ public class MainTest {
     public void addOneTest() {
         System.out.println(main.addOne(0));
         assertEquals(1, main.addOne(0));
+    }
 
+    @Test
+    public void mainTest() {
+        String[] args = {"login", "-cu", "me"};
+        Main.main(args);
+        System.console().write
     }
 }

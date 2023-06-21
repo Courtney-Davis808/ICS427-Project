@@ -3,10 +3,11 @@ package ics427;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.Help.Ansi.*;
 import java.util.Arrays;
 
 import static ics427.CipherMethods.*;
-
+import static picocli.CommandLine.Help.Ansi.Style.bg_red;
 
 @Command(name = "cg",
         subcommands = { CommandLine.HelpCommand.class },
@@ -17,6 +18,7 @@ public class Main {
             @Option(names = {"-u", "--user" }, description = "Username") String username,
             @Option(names = {"-c", "--create" }, description = "Register account") boolean register
     ) {
+        System.setProperty("picocli.ansi", "true");
         connectDatabase();
         boolean loop = true;
         String choice = "";
@@ -44,9 +46,32 @@ public class Main {
             System.out.println("Please select a choice");
             System.out.println("1: Add account");
             System.out.println("2: Get credentials from list of accounts");
+            System.out.println("3: Exit");
             choice = System.console().readLine().trim();
-            loop = !(choice.equals("1") || choice.equals("2") || choice.equals("3"));
+            loop = !choice.equals("3");
+            choice(choice, masterId);
         }
+
+        System.out.println("I am done, so I wipe terminal");
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                Runtime.getRuntime().exec("clear");
+            }
+        } catch (Exception ignored) {
+            System.out.println("FJKDLSFJS");
+
+        }
+        System.out.flush();
+
+    }
+
+    public int addOne(int x) {
+        return x + 1;
+    }
+
+    public static void choice(String choice, int masterId) {
         if (choice.equals("1")) {
             System.out.println("Please enter what account the credentials are for");
             String accountName = System.console().readLine().trim();
@@ -75,23 +100,6 @@ public class Main {
             getLogin(masterId, accountIndex);
         }
 
-        System.out.println("I am done, so I wipe terminal");
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                Runtime.getRuntime().exec("clear");
-            }
-        } catch (Exception ignored) {
-            System.out.println("FJKDLSFJS");
-
-        }
-        System.out.flush();
-
-    }
-
-    public int addOne(int x) {
-        return x + 1;
     }
 
     public static void main(String[] args) {
