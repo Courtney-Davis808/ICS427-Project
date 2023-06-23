@@ -5,6 +5,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Help.Ansi.*;
 import java.util.Arrays;
+import java.util.Locale;
 
 import static ics427.CipherMethods.*;
 import static picocli.CommandLine.Help.Ansi.Style.bg_red;
@@ -13,12 +14,12 @@ import static picocli.CommandLine.Help.Ansi.Style.bg_red;
         subcommands = { CommandLine.HelpCommand.class },
         description = "Password manager")
 public class Main {
+
     @Command(name = "login", description = "Login")
     void loginMethod (
             @Option(names = {"-u", "--user" }, description = "Username") String username,
             @Option(names = {"-c", "--create" }, description = "Register account") boolean register
     ) {
-        System.setProperty("picocli.ansi", "true");
         connectDatabase();
         boolean loop = true;
         String choice = "";
@@ -31,7 +32,7 @@ public class Main {
 
         if (register) {
             System.out.print("Please re enter your password");
-            String tmpPassword = Arrays.toString(System.console().readPassword());
+            String tmpPassword = String.valueOf(System.console().readPassword());
             if (!password.equals(tmpPassword)) {
                 System.out.println("Passwords don't match");
                 return;
@@ -46,10 +47,13 @@ public class Main {
             System.out.println("Please select a choice");
             System.out.println("1: Add account");
             System.out.println("2: Get credentials from list of accounts");
-            System.out.println("3: Exit");
+            System.out.println("3: Edit account credentials");
+            System.out.println("4: Delete account credentials");
+            System.out.println("5: Delete your password manager account");
+            System.out.println("6: Exit");
             choice = System.console().readLine().trim();
-            loop = !choice.equals("3");
-            choice(choice, masterId);
+            loop = !choice.equals("6");
+            choice(choice.trim(), masterId, username, password);
         }
 
         System.out.println("I am done, so I wipe terminal");
@@ -71,7 +75,7 @@ public class Main {
         return x + 1;
     }
 
-    public static void choice(String choice, int masterId) {
+    public static void choice(String choice, int masterId, String username, String password) {
         if (choice.equals("1")) {
             System.out.println("Please enter what account the credentials are for");
             String accountName = System.console().readLine().trim();
@@ -87,7 +91,6 @@ public class Main {
             System.out.println("Account added");
 
         } else if (choice.equals("2")) {
-            System.out.println("Another loop displaying the list of all accounts and when they select the account it prints out their credentials");
             showLogins(masterId);
             System.out.println("Enter the number to get credentials");
             int accountIndex = -1;
@@ -98,9 +101,66 @@ public class Main {
                 return;
             }
             getLogin(masterId, accountIndex);
+        } else if (choice.equals("3")) {
+            showLogins(masterId);
+            System.out.println("Enter the number to edit credentials");
+            int accountIndex = -1;
+            try {
+                accountIndex = Integer.parseInt(System.console().readLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter an integer");
+                return;
+            }
+            System.out.println("Please enter the new name, username, or password");
+            System.out.println("Enter a blank line if you don't want to change it");
+            System.out.println("To generate a password enter \"generate\"");
+            System.out.println("Enter new name");
+            String newName = System.console().readLine();
+            System.out.println("enter new username");
+            String newUsername = System.console().readLine();
+            System.out.println("Enter new password");
+            String newPassword = System.console().readLine();
+
+            if (newName.length() == 0 && newUsername.length() == 0 && newPassword.length() == 0) {
+                System.out.println("Not updating anything");
+                return;
+            }
+            if (newUsername.length() > 0) {
+                editLoginUser(masterId, accountIndex, username, password, newUsername);
+            }
+            if (newName.length() > 0) {
+                editLoginName(masterId, accountIndex, username, password, newName);
+            }
+            if (newPassword.equalsIgnoreCase("generate")) {
+                editLoginPass(masterId, accountIndex, username, password);
+            } else if (newPassword.length() > 0) {
+                editLoginPass(masterId, accountIndex, username, password, newPassword);
+            }
+        } else if (choice.equals("4")) {
+            showLogins(masterId);
+            System.out.println("Enter the number of the account you want to delete");
+            int accountIndex = -1;
+            try {
+                accountIndex = Integer.parseInt(System.console().readLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter an integer");
+                return;
+            }
+            deleteLogin(masterId, accountIndex, username, password);
+
+        } else if (choice.equals("5")) {
+            System.out.println("Are you sure you want to delete your account?");
+            System.out.println("Enter y to continue");
+            if (System.console().readLine().equalsIgnoreCase("y")) {
+                System.out.println("Please re enter your password");
+                System.out.println(String.valueOf(System.console().readPassword()));
+                deleteMaster(masterId, username, Arrays.toString(System.console().readPassword()));
+            }
+
         }
 
     }
+
 
     public static void main(String[] args) {
         int exitCode = new CommandLine(new Main()).execute(args);

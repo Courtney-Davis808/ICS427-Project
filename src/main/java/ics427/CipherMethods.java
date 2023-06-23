@@ -29,6 +29,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Methods to be used with the Cipher Guardian
+ * program.
+ *
+ * @author Michael Chun
+ * @version 0.8.0
+ */
 public class CipherMethods {
   public static void main(String[] args) {
     //Testing
@@ -85,7 +92,11 @@ public class CipherMethods {
       System.out.println(e.getMessage());
     }
   }
-  
+
+  /**
+   * Debug Method to show all user's login information
+   * in the table regardless of user.
+   */
   public static void showAllMasters() {
     String url = "jdbc:sqlite:CipherGuardian.db";
     try (Connection conn = DriverManager.getConnection(url)) {

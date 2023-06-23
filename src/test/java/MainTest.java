@@ -17,6 +17,5 @@ public class MainTest {
     public void mainTest() {
         String[] args = {"login", "-cu", "me"};
         Main.main(args);
-        System.console().write
     }
 }
