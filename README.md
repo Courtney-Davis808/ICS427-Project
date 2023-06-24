@@ -3,12 +3,9 @@
 ## What is complete
 * Github repo
 * Research on libraries
-* Researc on database
+* Research on database
 
 ## What is pending
-* Skeleton for CLI application
-* Creating database
-* Connecting databse to CLI
  
 ### Courtney Davis
 * Create Github repo
@@ -27,6 +24,8 @@
 ### Trey Yasunaga
 * Set up base for project
 * Researched CLI libraries for Java
+* Code coverage library
+* Unit testing library
 
 ## 06/13/2023 
 * Progress 
@@ -40,3 +39,21 @@
     * Document attack surface review and dynamic analysis tools (Courtney Davis)
     * Database set up (Michael Chun)
     * CLI skeleton (Trey Yasunaga)
+
+
+### Running the project
+Either download the jar file from the release page, or clone the repo and compile Main class in the ics427 directory found in src>main>java
+Enter ```java -jar ics427.jar login``` into the command line to login to the project. Follow the prompts afterward.
+
+### Closing thoughts
+* Just setting up the file structure to get the project to run with all the dependencies was quite challenging. 
+* Did not know you could generate a database from a jar file
+* Generating the secure database was pretty cool
+* It would be nice to add more commands, but I don't know what else would be handy to have.
+* Your passwords are your responsibility. If something goes wrong and your credentials are lost, it is on you. 
+
+[Github](https://github.com/Courtney-Davis809/ICS427-Project)
+
+[Relase](https://github.com/Courtney-Davis808/ICS427-Project/releases)
+
+[Wiki](https://github.com/Courtney-Davis808/ICS427-Project/wiki)
