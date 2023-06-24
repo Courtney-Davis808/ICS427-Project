@@ -23,23 +23,9 @@
 
 ### Trey Yasunaga
 * Set up base for project
-* Researched CLI libraries for Java
+* Created CLI app
 * Code coverage library
 * Unit testing library
-
-## 06/13/2023 
-* Progress 
-    * Databse set up
-    * CLI skeleton set up
-    * Dynamic anlysis tools added
-* Pending
-    * Connect CLI and database
-    * Work on unit tests and code coverage
-* Roles and responsibilities
-    * Document attack surface review and dynamic analysis tools (Courtney Davis)
-    * Database set up (Michael Chun)
-    * CLI skeleton (Trey Yasunaga)
-
 
 ### Running the project
 Either download the jar file from the release page, or clone the repo and compile Main class in the ics427 directory found in src>main>java
