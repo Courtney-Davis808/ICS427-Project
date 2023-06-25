@@ -3,12 +3,9 @@ package ics427;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import picocli.CommandLine.Help.Ansi.*;
 import java.util.Arrays;
-import java.util.Locale;
 
 import static ics427.CipherMethods.*;
-import static picocli.CommandLine.Help.Ansi.Style.bg_red;
 
 @Command(name = "cg",
         subcommands = { CommandLine.HelpCommand.class },
@@ -24,15 +21,17 @@ public class Main {
         boolean loop = true;
         String choice = "";
         if (username == null) {
+            System.out.println("Enter your username");
             username = System.console().readLine();
-            System.out.println("Username: " + username);
         }
         System.out.print("Enter password: ");
-        String password = Arrays.toString(System.console().readPassword());
+        String password = String.valueOf(System.console().readPassword());
+        System.out.println(password);
 
         if (register) {
             System.out.print("Please re enter your password");
             String tmpPassword = String.valueOf(System.console().readPassword());
+            System.out.println(tmpPassword);
             if (!password.equals(tmpPassword)) {
                 System.out.println("Passwords don't match");
                 return;
@@ -64,7 +63,7 @@ public class Main {
                 Runtime.getRuntime().exec("clear");
             }
         } catch (Exception ignored) {
-            System.out.println("FJKDLSFJS");
+            System.out.println("Error: " + ignored.getMessage());
 
         }
         System.out.flush();
