@@ -631,7 +631,7 @@ public class CipherMethods {
           PreparedStatement stmt = conn.prepareStatement(change);
           stmt = conn.prepareStatement(change);
           stmt.setInt(1, login_id);
-          stmt.executeQuery();
+          stmt.executeUpdate();
           stmt.close();
           conn.close();
         } else {
@@ -653,7 +653,7 @@ public class CipherMethods {
         PreparedStatement stmt = conn.prepareStatement(change);
         stmt = conn.prepareStatement(change);
         stmt.setInt(1, master_id);
-        stmt.executeQuery();
+        stmt.executeUpdate();
         stmt.close();
         conn.close();
       } else {

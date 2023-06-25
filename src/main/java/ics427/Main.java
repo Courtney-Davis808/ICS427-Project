@@ -3,7 +3,6 @@ package ics427;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import java.util.Arrays;
 
 import static ics427.CipherMethods.*;
 
@@ -26,12 +25,10 @@ public class Main {
         }
         System.out.print("Enter password: ");
         String password = String.valueOf(System.console().readPassword());
-        System.out.println(password);
 
         if (register) {
             System.out.print("Please re enter your password");
             String tmpPassword = String.valueOf(System.console().readPassword());
-            System.out.println(tmpPassword);
             if (!password.equals(tmpPassword)) {
                 System.out.println("Passwords don't match");
                 return;
@@ -51,8 +48,7 @@ public class Main {
             System.out.println("5: Delete your password manager account");
             System.out.println("6: Exit");
             choice = System.console().readLine().trim();
-            loop = !choice.equals("6");
-            choice(choice.trim(), masterId, username, password);
+            loop = choice(choice.trim(), masterId, username, password);
         }
 
         System.out.println("I am done, so I wipe terminal");
@@ -74,7 +70,7 @@ public class Main {
         return x + 1;
     }
 
-    public static void choice(String choice, int masterId, String username, String password) {
+    public static boolean choice(String choice, int masterId, String username, String password) {
         if (choice.equals("1")) {
             System.out.println("Please enter what account the credentials are for");
             String accountName = System.console().readLine().trim();
@@ -97,7 +93,7 @@ public class Main {
                 accountIndex = Integer.parseInt(System.console().readLine());
             } catch (NumberFormatException e) {
                 System.out.println("Please enter an integer");
-                return;
+                return true;
             }
             getLogin(masterId, accountIndex);
         } else if (choice.equals("3")) {
@@ -108,7 +104,7 @@ public class Main {
                 accountIndex = Integer.parseInt(System.console().readLine());
             } catch (NumberFormatException e) {
                 System.out.println("Please enter an integer");
-                return;
+                return true;
             }
             System.out.println("Please enter the new name, username, or password");
             System.out.println("Enter a blank line if you don't want to change it");
@@ -122,7 +118,7 @@ public class Main {
 
             if (newName.length() == 0 && newUsername.length() == 0 && newPassword.length() == 0) {
                 System.out.println("Not updating anything");
-                return;
+                return true;
             }
             if (newUsername.length() > 0) {
                 editLoginUser(masterId, accountIndex, username, password, newUsername);
@@ -143,7 +139,7 @@ public class Main {
                 accountIndex = Integer.parseInt(System.console().readLine());
             } catch (NumberFormatException e) {
                 System.out.println("Please enter an integer");
-                return;
+                return true;
             }
             deleteLogin(masterId, accountIndex, username, password);
 
@@ -152,12 +148,14 @@ public class Main {
             System.out.println("Enter y to continue");
             if (System.console().readLine().equalsIgnoreCase("y")) {
                 System.out.println("Please re enter your password");
-                System.out.println(String.valueOf(System.console().readPassword()));
-                deleteMaster(masterId, username, Arrays.toString(System.console().readPassword()));
+                String tmpPassword = String.valueOf(System.console().readPassword());
+                deleteMaster(masterId, username, tmpPassword);
+                return false;
             }
-
+        } else {
+            return !choice.equals("6");
         }
-
+        return true;
     }
 
 
