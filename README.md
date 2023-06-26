@@ -15,6 +15,7 @@
 * Research on database options
 * Review Attack Surface 
 * Dynamic Analysis Tools: Junit and Jacoco, review and document
+* Compose Incident Response Plan
 
 ### Michael Chun
 * Added static code anlysis to project
