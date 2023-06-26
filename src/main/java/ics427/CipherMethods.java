@@ -34,7 +34,7 @@ import org.passay.PasswordGenerator;
 * program.
 *
 * @author Michael Chun
-* @version 0.8.0
+* @version 0.9.0
 */
 public class CipherMethods {
   public static void main(String[] args) {
@@ -597,8 +597,8 @@ public class CipherMethods {
     String getUser = "";
     String getPass = "";
     try (Connection conn = DriverManager.getConnection(url)) {
-      String get = "SELECT master_id, master_user, master_pass FROM master"
-          + "table WHERE master_user = ?";
+      String get = "SELECT master_id, master_user, master_pass FROM "
+          + "master_table WHERE master_user = ?";
       PreparedStatement stmt = conn.prepareStatement(get);
       stmt.setString(1, masterUser);
       ResultSet rs = stmt.executeQuery();
