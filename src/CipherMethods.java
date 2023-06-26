@@ -37,24 +37,28 @@ import org.passay.PasswordGenerator;
 public class CipherMethods {
   public static void main(String[] args) {
     //Testing
-    //connectDatabase();
-    //addMasterUser("mike", "thisisapass");
-    //addMasterUser("mike", "AlsoAPass");
-    //addMasterUser("jimmy", "thisisalsoapass");
-    //addLogin(1, "reddit", "mikeReddit");
-    //addLogin(1, "facebook", "mikeTwitter");
-    //addLogin(2, "reddit", "jimmyReddit");
-    //addLogin(2, "facebook", "jimmyTwitter");
-    //showLogins(1);
-    //getLogin(1,1);
-    //showAllLogins();
-    //editLoginName(1, 1, "mike", "thisisapass", "NotReddit");
-    //editLoginUser(1, 1, "mike", "thisisapass", "NotMike");
-    //editLoginPass(1, 1, "mike", "thisisapass", "NewPass");
-    //showAllLogins();
-    //editLoginPass(1, 1, "mike", "thisisapass");
-    //showAllLogins();
-    
+    connectDatabase();
+    addMasterUser("mike", "thisisapass");
+    addMasterUser("mike", "AlsoAPass");
+    addMasterUser("jimmy", "thisisalsoapass");
+    addLogin(1, "reddit", "mikeReddit");
+    addLogin(1, "facebook", "mikeTwitter");
+    addLogin(2, "reddit", "jimmyReddit");
+    addLogin(2, "facebook", "jimmyTwitter");
+    showLogins(1);
+    getLogin(1, 1);
+    showAllLogins();
+    editLoginName(1, 1, "mike", "thisisapass", "NotReddit");
+    editLoginUser(1, 1, "mike", "thisisapass", "NotMike");
+    editLoginPass(1, 1, "mike", "thisisapass", "NewPass");
+    showAllLogins();
+    editLoginPass(1, 1, "mike", "thisisapass");
+    showAllLogins();
+    deleteMaster(1, "mike", "thisisapass");
+    System.out.println("Testing testing testing\n\n");
+    showAllLogins();
+    System.out.println("Testing testing testing\n\n");
+    showAllMasters();
   }
   
   /**
@@ -379,6 +383,7 @@ public class CipherMethods {
       String tableOne = "SELECT master_id FROM master_table WHERE master_user = ?;";
       PreparedStatement stmt = conn.prepareStatement(tableOne);
       stmt = conn.prepareStatement(tableOne);
+      stmt.setString(1, user);
       ResultSet rs = stmt.executeQuery();
       if (rs.next() == false) {
         rs.close();
@@ -480,13 +485,15 @@ public class CipherMethods {
     String url = "jdbc:sqlite:CipherGuardian.db";
     try (Connection conn = DriverManager.getConnection(url)) {
       String add = "INSERT INTO login_table (master_id, login_name, login_user,"
-          + "login_pass, login_salt)\n"
-          + " VALUES (?, ?, ?, ?);";
+          + "login_pass, login_salt, login_iv)\n"
+          + " VALUES (?, ?, ?, ?, ?, ?);";
       PreparedStatement stmt = conn.prepareStatement(add);
       stmt.setInt(1, id);
       stmt.setString(2, name);
-      stmt.setString(3, cipherText);
-      stmt.setString(4, salt);
+      stmt.setString(3, user);
+      stmt.setString(4, cipherText);
+      stmt.setString(5, salt);
+      stmt.setBytes(6, iv);
       stmt.executeUpdate();
       stmt.close();
       conn.close();
@@ -835,13 +842,14 @@ public class CipherMethods {
     String url = "jdbc:sqlite:CipherGuardian.db";
     try (Connection conn = DriverManager.getConnection(url)) {
       if (verifyMaster(masterId, masterUser, masterPass)) {
-        String change = "DELETE FROM master_table WHERE master_id = ?;";
+        String change = "DELETE FROM login_table WHERE master_id = ?;";
         PreparedStatement stmt = conn.prepareStatement(change);
         stmt.setInt(1, masterId);
-        stmt.executeQuery();
-        change = "DELETE FROM login_table WHERE master_id = ?;";
+        stmt.executeUpdate();
+        change = "DELETE FROM master_table WHERE master_id = ?;";
         stmt = conn.prepareStatement(change);
-        stmt.executeQuery();
+        stmt.setInt(1, masterId);
+        stmt.executeUpdate();
         stmt.close();
         conn.close();
       } else {
