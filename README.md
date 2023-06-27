@@ -4,6 +4,7 @@
 * Github repo
 * Research on libraries
 * Research on database
+* Incident Response Plan
 
 ## What is pending
 
@@ -15,7 +16,8 @@
 * Research on database options
 * Review Attack Surface
 * Dynamic Analysis Tools: Junit and Jacoco, review and document
-* Compose Incident Response Plan
+* Incident Response plan
+* Security Review
 
 ### Michael Chun
 * Added static code analysis to project
@@ -49,6 +51,11 @@ If this is your first time using the app, you need to create a login, to do this
 * It would be nice to add more commands, but I don't know what else would be handy to have.
 * DISCLAIMER:
 * Your passwords are your responsibility. If something goes wrong and your credentials are lost, it is on you.
+* COURTNEY DAVIS
+* I learned all sorts of things about coding
+* This is the first time I've used GitHub! I will use it in future project. I'm actually going to use GitHub to import a vulnerability into a box for a DOD cyber games project.
+* I learned ALOT about secure coding practices that will help be in my future career as a cybersecurity specialist.
+* Mike and Trey were great partners to have for this project. 
 
 [Github](https://github.com/Courtney-Davis809/ICS427-Project)
 
