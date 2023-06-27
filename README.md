@@ -1,22 +1,32 @@
 # ICS427-Project
+## Part I 
 
 ## What is complete
-* Github repo
-* Research on libraries
-* Research on database
+* Github repo- Courtney
+* Threat Model - Courtney
+## What is pending
+
+
+## Part II 
+
+## What is complete
+* Research on tools- Courtney
+* Research on libraries- 
+* Research on database- Michael
 * Incident Response Plan
 
 ## What is pending
+* 2MFA- Michael
+
+  
+## Part III
 
 ### Courtney Davis
-* Create Github repo
-* Threat Model
-* Risk Assessment Plan
+* 
 * Libraries and tool documentation
 * Research on database options
 * Review Attack Surface
 * Dynamic Analysis Tools: Junit and Jacoco, review and document
-* Incident Response plan
 * Security Review
 
 ### Michael Chun
@@ -29,6 +39,19 @@
 * Created CLI app
 * Code coverage library
 * Unit testing library
+  
+
+## Part IV 
+
+## Courtney Davis
+* Static and Dynamic Testing
+* Incident Response Plan
+* Final Security Review
+  
+## Michael Chun
+
+## Trey Yasunaga
+
 
 ### Running the project
 Either download the jar file from the release page, or clone the repo and compile Main class in the ics427 directory found in src>main>java
