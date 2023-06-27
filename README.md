@@ -32,6 +32,8 @@
 Either download the jar file from the release page, or clone the repo and compile Main class in the ics427 directory found in src>main>java
 Enter ```java -jar ics427.jar login``` into the command line to login to the project. Follow the prompts afterward.
 
+If this is your first time using the app, you need to create a login, to do this use the -c flag like this: java -jar ics427.jar login -c.
+
 ### Closing thoughts
 * MICHAEL CHUN:
 * Trying to make sure the methods were easy to integrate by other team member was time consuming and difficult
@@ -39,6 +41,7 @@ Enter ```java -jar ics427.jar login``` into the command line to login to the pro
 * Learning how to work with both SQLite and all the different encryption methods and libraries was helpful, but difficult
 * Learning about all the different ways to encrypt, hash, and protect your data was very helpful when approaching future projects
 * I wish I could take more time to implement other secure features to help make it more functional as well as more secure. Things like changing master login passwords, en/decrypting the usernames as well, and finding a way to encrypt the entire database in a unintrusive way.
+* I'm proud I was able to successfully learn how to create secure database practices and use salting/hashing/encryption/decryption/etc.
 * TREY YASUNAGA:
 * Just setting up the file structure to get the project to run with all the dependencies was quite challenging.
 * Did not know you could generate a database from a jar file
