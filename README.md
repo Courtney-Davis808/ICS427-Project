@@ -1,5 +1,5 @@
 # ICS427-Project
-## Part I 
+## Part I
 
 ## What is complete
 * Github repo- Courtney
@@ -7,22 +7,23 @@
 ## What is pending
 
 
-## Part II 
+## Part II
 
 ## What is complete
 * Research on tools- Courtney
-* Research on libraries- 
+* Research on libraries-
 * Research on database- Michael
+* Java method planning - Michael
 * Incident Response Plan
 
 ## What is pending
 * 2MFA- Michael
 
-  
+
 ## Part III
 
 ### Courtney Davis
-* 
+*
 * Libraries and tool documentation
 * Research on database options
 * Review Attack Surface
@@ -32,6 +33,7 @@
 ### Michael Chun
 * Added static code analysis to project
 * Worked on adding database to application
+* Implemented Encryption, Decryption, Salt, and Hashing to methods
 * Implemented methods for interacting with the database
 
 ### Trey Yasunaga
@@ -39,16 +41,18 @@
 * Created CLI app
 * Code coverage library
 * Unit testing library
-  
 
-## Part IV 
+
+## Part IV
 
 ## Courtney Davis
 * Static and Dynamic Testing
-* Incident Response Plan
+* Incident Response Plant
 * Final Security Review
-  
+
 ## Michael Chun
+* Added checkstyle fixes to methods
+* Added java doc comments to methods
 
 ## Trey Yasunaga
 
@@ -72,13 +76,14 @@ If this is your first time using the app, you need to create a login, to do this
 * Did not know you could generate a database from a jar file
 * Generating the secure database was pretty cool
 * It would be nice to add more commands, but I don't know what else would be handy to have.
-* DISCLAIMER:
-* Your passwords are your responsibility. If something goes wrong and your credentials are lost, it is on you.
-* COURTNEY DAVIS
+* COURTNEY DAVIS:
 * I learned all sorts of things about coding
 * This is the first time I've used GitHub! I will use it in future project. I'm actually going to use GitHub to import a vulnerability into a box for a DOD cyber games project.
 * I learned ALOT about secure coding practices that will help be in my future career as a cybersecurity specialist.
-* Mike and Trey were great partners to have for this project. 
+* Mike and Trey were great partners to have for this project.
+* DISCLAIMER:
+* Your passwords are your responsibility. If something goes wrong and your credentials are lost, it is on you.
+
 
 [Github](https://github.com/Courtney-Davis809/ICS427-Project)
 
