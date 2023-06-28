@@ -55,7 +55,7 @@
 * Added java doc comments to methods
 
 ## Trey Yasunaga
-
+* Added more features into the CLI
 
 ### Running the project
 Either download the jar file from the release page, or clone the repo and compile Main class in the ics427 directory found in src>main>java
